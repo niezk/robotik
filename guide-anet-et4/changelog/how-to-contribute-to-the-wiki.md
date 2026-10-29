@@ -1,0 +1,406 @@
+# How to Contribute to the Wiki¶
+
+This guide explains how to contribute to the OrcaSlicer wiki.
+
+OrcaSlicer's wiki is generated automatically from the files in the [OrcaSlicer WIKI repository](https://github.com/OrcaSlicer/OrcaSlicer_WIKI).\
+To suggest small changes or improvements, please [open an issue in that repository](https://github.com/OrcaSlicer/OrcaSlicer_WIKI/issues).\
+If you prefer to make the edits yourself, follow this guide for best practices when creating a pull request (PR).
+
+We encourage developers and users to contribute by updating existing pages and adding new content. This helps keep the documentation accurate and useful.\
+When adding new features, consider updating the wiki so users can access the latest guidance.
+
+* [Wiki Structure](how-to-contribute-to-the-wiki.md#wiki-structure)
+  * [Home](how-to-contribute-to-the-wiki.md#home)
+    * [Index and Navigation](how-to-contribute-to-the-wiki.md#index-and-navigation)
+  * [File Naming and Organization](how-to-contribute-to-the-wiki.md#file-naming-and-organization)
+* [Orca to Wiki Redirection](how-to-contribute-to-the-wiki.md#orca-to-wiki-redirection)
+  * [Option Mode and Variables Metadata](how-to-contribute-to-the-wiki.md#option-mode-and-variables-metadata)
+* [Formatting and Style](how-to-contribute-to-the-wiki.md#formatting-and-style)
+  * [Markdown Formatting](how-to-contribute-to-the-wiki.md#markdown-formatting)
+  * [Alerts and Callouts](how-to-contribute-to-the-wiki.md#alerts-and-callouts)
+    * [New Content](how-to-contribute-to-the-wiki.md#new-content)
+* [Images](how-to-contribute-to-the-wiki.md#images)
+  * [Image Sources](how-to-contribute-to-the-wiki.md#image-sources)
+    * [OrcaSlicer Resources](how-to-contribute-to-the-wiki.md#orcaslicer-resources)
+    * [Wiki Images](how-to-contribute-to-the-wiki.md#wiki-images)
+      * [Image Naming](how-to-contribute-to-the-wiki.md#image-naming)
+      * [Image Placement](how-to-contribute-to-the-wiki.md#image-placement)
+      * [Linking Images](how-to-contribute-to-the-wiki.md#linking-images)
+        * [Examples](how-to-contribute-to-the-wiki.md#examples)
+  * [Avoid the Following](how-to-contribute-to-the-wiki.md#avoid-the-following)
+    * [Resize Images](how-to-contribute-to-the-wiki.md#resize-images)
+  * [Image Cropping and Highlighting](how-to-contribute-to-the-wiki.md#image-cropping-and-highlighting)
+  * [Recommended Formats](how-to-contribute-to-the-wiki.md#recommended-formats)
+* [Structuring Content](how-to-contribute-to-the-wiki.md#structuring-content)
+* [Commands and Code Blocks](how-to-contribute-to-the-wiki.md#commands-and-code-blocks)
+* [External Links](how-to-contribute-to-the-wiki.md#external-links)
+
+## Wiki Structure[¶](how-to-contribute-to-the-wiki.md#wiki-structure) <a href="#wiki-structure" id="wiki-structure"></a>
+
+Each page of the Wiki is a Markdown file located in the [OrcaSlicer\_WIKI repository](https://github.com/OrcaSlicer/OrcaSlicer_WIKI).\
+The wiki is organized into sections that cover different areas of the project.
+
+### Home[¶](how-to-contribute-to-the-wiki.md#home) <a href="#home" id="home"></a>
+
+The Home page is the starting point for the OrcaSlicer wiki. From there you can navigate to sections and topics related to the project.
+
+When you create a new page or section, link it from the Home page under the appropriate category.\
+The Home page currently organizes content in these top-level entries:
+
+* ![printer](https://www.orcaslicer.com/wiki/images/orcaslicer-icons/printer.svg?raw=true) [Printer Settings](/broken/pages/640f324a9453fd0203fb884ec6e61f802174e2be#printer-settings)
+* ![filament](https://www.orcaslicer.com/wiki/images/orcaslicer-icons/filament.svg?raw=true) [Material Settings](/broken/pages/640f324a9453fd0203fb884ec6e61f802174e2be#material-settings)
+* ![process](https://www.orcaslicer.com/wiki/images/orcaslicer-icons/process.svg?raw=true) [Process Settings](/broken/pages/640f324a9453fd0203fb884ec6e61f802174e2be#process-settings)
+* ![tab\_3d\_active](https://www.orcaslicer.com/wiki/images/orcaslicer-icons/tab_3d_active.svg?raw=true) [Prepare](/broken/pages/640f324a9453fd0203fb884ec6e61f802174e2be#prepare)
+* ![tab\_calibration\_active](https://www.orcaslicer.com/wiki/images/orcaslicer-icons/tab_calibration_active.svg?raw=true) [Calibrations](/broken/pages/640f324a9453fd0203fb884ec6e61f802174e2be#calibrations)
+* ![im\_code](https://www.orcaslicer.com/wiki/images/orcaslicer-icons/im_code.svg?raw=true) [Developer Section](/broken/pages/640f324a9453fd0203fb884ec6e61f802174e2be#developer-section)
+
+Each section can have multiple pages covering specific topics. For example, the [Process Settings](/broken/pages/640f324a9453fd0203fb884ec6e61f802174e2be#process-settings) section includes pages on [quality](/broken/pages/640f324a9453fd0203fb884ec6e61f802174e2be#quality-settings), [support](/broken/pages/640f324a9453fd0203fb884ec6e61f802174e2be#support-settings), and [others](/broken/pages/640f324a9453fd0203fb884ec6e61f802174e2be#others-settings).
+
+#### Index and Navigation[¶](how-to-contribute-to-the-wiki.md#index-and-navigation) <a href="#index-and-navigation" id="index-and-navigation"></a>
+
+GitHub Wiki uses file names as page identifiers. To link to a page, use the file name without the `.md` extension. If a file lives in a subdirectory, **do not include the subdirectory** in the link; link directly to the file name from the Home page.
+
+For example, if you add `calibration/flow_ratio_calib.md`, link it like this:
+
+```
+[Flow Ratio Calibration](../calibration/flow_ratio_calib.md)
+```
+
+Inside each section, the website sidebar follows the order of the list links on the Home page, so place the link where the page sits in the slicer.
+
+For long pages, include a table of contents at the top to help readers find sections quickly.
+
+```
+- [Wiki Structure](#wiki-structure)
+    - [Home](#home)
+        - [Index and Navigation](#index-and-navigation)
+    - [File Naming and Organization](#file-naming-and-organization)
+- [Orca to Wiki Redirection](#orca-to-wiki-redirection)
+- [Formatting and Style](#formatting-and-style)
+    - [Markdown Formatting](#markdown-formatting)
+    - [Alerts and Callouts](#alerts-and-callouts)
+- [Images](#images)
+    - [Image Sources](#image-sources)
+        - [OrcaSlicer Resources](#orcaslicer-resources)
+        - [Wiki Images](#wiki-images)
+            - [Image Naming](#image-naming)
+            - [Image Placement](#image-placement)
+            - [Linking Images](#linking-images)
+                - [Examples](#examples)
+    - [Avoid the Following](#avoid-the-following)
+        - [Resize Images](#resize-images)
+    - [Image Cropping and Highlighting](#image-cropping-and-highlighting)
+    - [Recommended Formats](#recommended-formats)
+- [Structuring Content](#structuring-content)
+- [Commands and Code Blocks](#commands-and-code-blocks)
+- [External Links](#external-links)
+```
+
+Note
+
+If you're adding a new section, follow the existing structure and make sure it doesn't already fit an existing category. Link it from the Home page accordingly.
+
+### File Naming and Organization[¶](how-to-contribute-to-the-wiki.md#file-naming-and-organization) <a href="#file-naming-and-organization" id="file-naming-and-organization"></a>
+
+When creating new pages, follow these file-naming conventions:
+
+* Use unique file names to avoid conflicts.
+* Use descriptive names that reflect the page's content.
+* Use snake\_case for filenames (e.g.: `how_to_wiki.md`).
+* If a page belongs to a section, include a suffix that clarifies it (for example, calibration pages should end with `-calib.md`, e.g. `flow_ratio_calib.md`).
+* Place files in the appropriate subdirectory when applicable (e.g.: `calibration/` for calibration-related content).
+
+## Orca to Wiki Redirection[¶](how-to-contribute-to-the-wiki.md#orca-to-wiki-redirection) <a href="#orca-to-wiki-redirection" id="orca-to-wiki-redirection"></a>
+
+OrcaSlicer can redirect users from the GUI to the appropriate wiki pages, making it easier to find relevant documentation.
+
+The option-to-wiki mapping is defined in [src/slic3r/GUI/Tab.cpp](https://github.com/OrcaSlicer/OrcaSlicer/blob/main/src/slic3r/GUI/Tab.cpp). The links naming uses the same format as the [Wiki Navigation described above](how-to-contribute-to-the-wiki.md#index-and-navigation), `[filename]#[section(optional)]` e.g. `quality_settings_seam` or `quality_settings_seam#scarf-joint-seam`.
+
+There are 3 main ways to set up these links:
+
+1.  Using `append_single_option_line` with a second string argument for the wiki page.
+
+    ```
+    optgroup->append_single_option_line("[OPTION_NAME]"); // Option without wiki page/redirection
+    optgroup->append_single_option_line("[OPTION_NAME]", "[WIKI_LINK]"); // Option with wiki page and  redirection
+    ```
+
+    Example:
+
+    ```
+    optgroup->append_single_option_line("seam_gap","quality_settings_seam"); // Wiki page and redirection
+    optgroup->append_single_option_line("seam_slope_type", "quality_settings_seam#scarf-joint-seam"); // Wiki  page and redirection to `Scarf Joint Seam` section
+    ```
+
+    An option that is customized first is passed as an `Option` object; the sync script reads its key from the `get_option` call that created it:
+
+    ```
+    option = optgroup->get_option("filename_format");
+    option.opt.is_code = true;
+    optgroup->append_single_option_line(option, "others_settings_g_code_output#filename-format");
+    ```
+2.  Using `append_option_line` with a third string argument for the wiki page.
+
+    ```
+    append_option_line([optgroup], [opt_key], "[WIKI_LINK]");
+    ```
+
+    Example:
+
+    ```
+    append_option_line(optgroup, "machine_max_acceleration_x", "printer_motion_ability#acceleration-limitation");
+    ```
+3.  Using grouped rows with `append_line` and setting the wiki target via `line.label_path`.
+
+    ```
+    line.label_path = "[WIKI_LINK]";
+    ```
+
+    Example:
+
+    ```
+    Line line = { L("Overhang speed"), L("...") };
+    line.label_path = "speed_settings_overhang_speed#slow-down-for-overhang";
+    line.append_option(optgroup->get_option("overhang_1_4_speed"));
+    optgroup->append_line(line);
+    ```
+
+### Option Mode and Variables Metadata[¶](how-to-contribute-to-the-wiki.md#option-mode-and-variables-metadata) <a href="#option-mode-and-variables-metadata" id="option-mode-and-variables-metadata"></a>
+
+Most option sections start with one or two metadata lines directly under the heading, for example:
+
+```
+## Infill/Wall Overlap
+
+The top solid infill area is slightly enlarged to overlap with walls...
+```
+
+* The `[Mode](../general_settings/option_mode.md)` line records the option's visibility level (`Simple`, `Advanced`, `Expert`, or `Developer`).
+* The `[Variable](../developer_reference/built_in_placeholders_variables.md)` line (or `[Variables]` when there is more than one) records the config key(s) that the section documents.
+
+Important
+
+Do **not** write or edit these lines by hand. They are generated and normalized by the [`sync-tab-options-to-wiki.ps1`](https://github.com/OrcaSlicer/OrcaSlicer_WIKI/blob/main/sync-tab-options-to-wiki.ps1) script at the repository root. Any manual edits will be overwritten the next time the script runs.
+
+The script reads the option-to-page mappings from [Tab.cpp](https://github.com/OrcaSlicer/OrcaSlicer/blob/main/src/slic3r/GUI/Tab.cpp) and the option mode from [PrintConfig.cpp](https://github.com/OrcaSlicer/OrcaSlicer/blob/main/src/libslic3r/PrintConfig.cpp), then inserts or refreshes the metadata under the matching heading in each page. It also prunes metadata from sections that are no longer referenced from `Tab.cpp`.
+
+When you add or rename an option's documentation, **write only the heading and the descriptive body** — the section must exist and its anchor must match the `Tab.cpp` link (see above). Then run the script to populate the metadata:
+
+```
+# Preview changes without writing files
+pwsh ./sync-tab-options-to-wiki.ps1 -DryRun
+
+# Apply the metadata to the Markdown pages
+pwsh ./sync-tab-options-to-wiki.ps1
+```
+
+By default the script downloads `Tab.cpp` and `PrintConfig.cpp` from the OrcaSlicer `main` branch. To run it against a local checkout, pass the paths explicitly:
+
+```
+pwsh ./sync-tab-options-to-wiki.ps1 `
+    -TabCppPath "path/to/OrcaSlicer/src/slic3r/GUI/Tab.cpp" `
+    -PrintConfigCppPath "path/to/OrcaSlicer/src/libslic3r/PrintConfig.cpp"
+```
+
+Note
+
+If the script reports `Missing heading anchors`, the `Tab.cpp` link points to a section that does not yet exist in the target page. Create that heading (matching the anchor) so the redirect resolves and the metadata can be inserted.
+
+## Formatting and Style[¶](how-to-contribute-to-the-wiki.md#formatting-and-style) <a href="#formatting-and-style" id="formatting-and-style"></a>
+
+Follow these style and formatting conventions when contributing to the wiki.
+
+### Markdown Formatting[¶](how-to-contribute-to-the-wiki.md#markdown-formatting) <a href="#markdown-formatting" id="markdown-formatting"></a>
+
+The wiki uses standard Markdown syntax for formatting and aims to maintain a consistent style across all pages. Avoid using raw HTML tags and prefer Markdown formatting instead.
+
+Ensure your indentation is consistent, especially for code blocks and lists.
+
+Refer to the [GitHub Markdown Guide](https://guides.github.com/features/mastering-markdown/) for more information on Markdown syntax.
+
+### Alerts and Callouts[¶](how-to-contribute-to-the-wiki.md#alerts-and-callouts) <a href="#alerts-and-callouts" id="alerts-and-callouts"></a>
+
+Use GitHub's alert syntax to add inline notes and warnings:
+
+```
+> [!NOTE]
+> Useful information that readers should know.
+
+> [!TIP]
+> Helpful advice for doing things more easily.
+
+> [!IMPORTANT]
+> Key information required to achieve a goal.
+
+> [!WARNING]
+> Urgent information to avoid problems.
+
+> [!CAUTION]
+> Warnings about risks or negative outcomes.
+```
+
+Note
+
+Refer to the [GitHub Alerts documentation](https://docs.github.com/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) for more details.
+
+#### New Content[¶](how-to-contribute-to-the-wiki.md#new-content) <a href="#new-content" id="new-content"></a>
+
+The Wiki should be updated to reflect the latest stable release with the addition of new features present in current nightly builds.
+
+When new features or upgrades are merged into the main branch, please add a note using the following format:
+
+```
+> [!IMPORTANT]
+> NEW FEATURE: **Feature short description**  
+> Available in: [Nightly builds](https://github.com/OrcaSlicer/OrcaSlicer/releases/tag/nightly-builds) or Releases greater than **stable version number at merge time**.
+```
+
+Example:
+
+Important
+
+NEW FEATURE: **Inverse Hole Direction**\
+Available in: [Nightly builds](https://github.com/OrcaSlicer/OrcaSlicer/releases/tag/nightly-builds) or Releases greater than **2.4.0**.
+
+This notes should be removed after a new stable release is made that includes the new feature.
+
+## Images[¶](how-to-contribute-to-the-wiki.md#images) <a href="#images" id="images"></a>
+
+Images are encouraged to enhance the clarity and quality of the wiki content. They help illustrate concepts, provide examples, and improve readability.
+
+Caution
+
+Do not use images from third-party sources unless you have the proper permissions.
+
+### Image Sources[¶](how-to-contribute-to-the-wiki.md#image-sources) <a href="#image-sources" id="image-sources"></a>
+
+#### OrcaSlicer Resources[¶](how-to-contribute-to-the-wiki.md#orcaslicer-resources) <a href="#orcaslicer-resources" id="orcaslicer-resources"></a>
+
+Use images from the OrcaSlicer resources folder located at `\resources\images` in the OrcaSlicer repository. These images are designed to match the application's UI and maintain consistency.
+
+#### Wiki Images[¶](how-to-contribute-to-the-wiki.md#wiki-images) <a href="#wiki-images" id="wiki-images"></a>
+
+Use or add images in the `images/` directory of the [OrcaSlicer\_WIKI repository](https://github.com/OrcaSlicer/OrcaSlicer_WIKI/tree/main/images).\
+There you can find images already used in the wiki like screenshots, diagrams, and icons.
+
+**Image Naming**[**¶**](how-to-contribute-to-the-wiki.md#image-naming)
+
+* Use clear, descriptive filenames that reflect the image content.
+* For section-specific images, include the section name or initials (for example `pa-[description].png` for Pressure Advance images).
+
+**Image Placement**[**¶**](how-to-contribute-to-the-wiki.md#image-placement)
+
+* General images should be placed in the `images/` directory.
+* Section-specific images should be stored in their corresponding subdirectories (e.g., `images/calibration/` for calibration content).
+
+Tip
+
+You can use `\resources\images` images used in the GUI.
+
+**Linking Images**[**¶**](how-to-contribute-to-the-wiki.md#linking-images)
+
+Always use raw GitHub URLs for image links to ensure correct display:
+
+Format = `![`filename`](` + Base URL + filename.extension + Raw tag + `)`
+
+* Base URL:
+
+```
+https://github.com/OrcaSlicer/OrcaSlicer_WIKI/blob/main/images/
+```
+
+* Raw tag:
+
+```
+?raw=true
+```
+
+**Examples**[**¶**](how-to-contribute-to-the-wiki.md#examples)
+
+* For an image in `images/` named `calibration.png`:
+
+```
+![calibration](../images/calibration.png?raw=true)
+```
+
+* For an image in a subdirectory like `images/GUI/combobox.png`:
+
+```
+![combobox](../images/GUI/combobox.png?raw=true)
+```
+
+Important
+
+New or moved images may not appear in previews until the pull request is merged. Double-check paths and update links if you move files.
+
+### Avoid the Following[¶](how-to-contribute-to-the-wiki.md#avoid-the-following) <a href="#avoid-the-following" id="avoid-the-following"></a>
+
+* Relative paths
+* GitHub Assets/user-content/user-images URLs
+* External image links from temporary or unreliable hosts
+* Images containing personal or sensitive information
+* Using images for content that can be expressed in text, such as equations or code—use Markdown syntax or Mermaid/Math formatting instead.
+
+Note
+
+When contributing section-specific images, follow the naming conventions and directory structure.
+
+#### Resize Images[¶](how-to-contribute-to-the-wiki.md#resize-images) <a href="#resize-images" id="resize-images"></a>
+
+Avoid the resize of images and let the Wiki handle it automatically.
+
+If resizing is necessary (e.g., for thumbnails), use the following syntax:
+
+HTML Format = `<img alt="` + filename + `"` + `src="` + Base URL + filename.extension + Raw tag + size limit. Example:
+
+```
+<img alt="IS_damp_marlin_print_measure" src="../images/InputShaping/IS_damp_marlin_print_measure.jpg?raw=true" height="200">
+```
+
+### Image Cropping and Highlighting[¶](how-to-contribute-to-the-wiki.md#image-cropping-and-highlighting) <a href="#image-cropping-and-highlighting" id="image-cropping-and-highlighting"></a>
+
+To ensure clarity:
+
+* Crop images to focus on relevant areas.
+* Use simple annotations (arrows, circles, rectangles) to highlight important parts without overloading the image.
+
+### Recommended Formats[¶](how-to-contribute-to-the-wiki.md#recommended-formats) <a href="#recommended-formats" id="recommended-formats"></a>
+
+* **JPG:** Suitable for photographs. Avoid for images with text or fine detail due to compression artifacts.
+* **PNG:** Ideal for screenshots or images with transparency. Ensure sufficient contrast for light and dark modes.
+* **SVG:** Preferred when possible. SVGs support theme adaptation (light/dark mode), making them ideal for icons and diagrams.
+
+## Structuring Content[¶](how-to-contribute-to-the-wiki.md#structuring-content) <a href="#structuring-content" id="structuring-content"></a>
+
+Each page should have a clear objective. After a short introduction, choose a structure that fits the content:
+
+* **Step-by-step guides:** Use for sequential procedures (for example calibration).
+* **GUI-based reference:** Describe settings following OrcaSlicer's UI when sequence isn't required.
+
+Example: explain **Layer Height** before **Initial Layer Height**, since the former is global and the latter only applies to the first layer.
+
+## Commands and Code Blocks[¶](how-to-contribute-to-the-wiki.md#commands-and-code-blocks) <a href="#commands-and-code-blocks" id="commands-and-code-blocks"></a>
+
+When adding commands or code blocks please use the [Code Block with Syntax Highlighting feature of Markdown](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-and-highlighting-code-blocks#syntax-highlighting).
+
+* Use triple backticks (\`\`\`) to enclose code blocks.
+* Specify the language for proper highlighting and readability.
+
+````
+```json
+{
+  "key": "value"
+}
+```
+````
+
+```
+{
+  "key": "value"
+}
+```
+
+## External Links[¶](how-to-contribute-to-the-wiki.md#external-links) <a href="#external-links" id="external-links"></a>
+
+Be careful when linking to external resources.\
+Ensure links are relevant and reliable and cite papers or articles when appropriate.

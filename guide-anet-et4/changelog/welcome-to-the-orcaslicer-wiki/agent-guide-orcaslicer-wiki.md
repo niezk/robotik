@@ -1,0 +1,153 @@
+# Agent Guide — OrcaSlicer Wiki¶
+
+This repository holds the **source Markdown** for the [OrcaSlicer Wiki](./). On push to `main`, the content is published to the GitHub Wiki and deployed to the website automatically — there is no manual build step to run for a docs change. Every pull request is checked by CI validators (see [CI Checks](agent-guide-orcaslicer-wiki.md#ci-checks) below), so follow these rules to keep PRs green.
+
+The authoritative contributor guide is [developer\_reference/how\_to\_wiki.md](/broken/pages/c65cb8520ae8a32a72d1b4d9aa618dd551d5312f). This file is the condensed, must-follow version for automated agents.
+
+## Golden Rules[¶](agent-guide-orcaslicer-wiki.md#golden-rules) <a href="#golden-rules" id="golden-rules"></a>
+
+* **Edit the source Markdown at the repo root**, not the generated `wiki/` folder. `wiki/` is build output (produced by `build.sh`/`mkdocs`) — never hand-edit it.
+* **Prefer Markdown over raw HTML.** The only sanctioned HTML is an `<img>` tag when you must constrain image size (see [Images](agent-guide-orcaslicer-wiki.md#images)).
+* **Every new page must be linked** from another page (usually `home.md`) — unreferenced pages fail CI.
+* **Every image under `images/` must be referenced** by at least one page — unreferenced images fail CI.
+* **Never hand-edit generated blocks.** The `[Mode]`/`[Variable(s)]` option lines (from `Tab.cpp`), the translation table in [`developer_reference/localization_glossary.md`](/broken/pages/de6a4f1e8c7d9f6fa71f57371deff8e27cc53ae2) (from the per-language files in `developer_reference/glossary/`), and the `nav:` in `mkdocs.yml` are all script output. Edit the source, then run the generator.
+* Keep changes minimal and match the surrounding style, tone, and formatting of the page you edit.
+
+## File & Directory Naming[¶](agent-guide-orcaslicer-wiki.md#file-directory-naming) <a href="#file-directory-naming" id="file-directory-naming"></a>
+
+Enforced by CI (`validate_snake_lower_case_markdown_filenames.yml`):
+
+* Markdown filenames must be **lowercase `snake_case`**: `[a-z0-9]` words separated by `_` (e.g. `flow_ratio_calib.md`). `README.md` is the only exception.
+* Use descriptive, unique names. Section pages carry a clarifying suffix — e.g. calibration pages end with `_calib.md` (`flow_ratio_calib.md`).
+* Place pages in the matching top-level directory: `calibration/`, `printer_settings/`, `material_settings/`, `print_settings/`, `print_prepare/`, `general_settings/`, `user_profiles/`, `developer_reference/`, `guides/`, `releases/`, `web_extras/`.
+
+## Internal Links[¶](agent-guide-orcaslicer-wiki.md#internal-links) <a href="#internal-links" id="internal-links"></a>
+
+Enforced by CI (`validate_internal_link.yml`) — this is the most common source of PR failures:
+
+* Link to a page by its **filename without the `.md` extension and without any directory**: `[Flow Ratio Calibration](calibration/flow_ratio_calib.md)`.
+  * GitHub Wiki uses the filename as the page id, so `[text](calibration/flow_ratio_calib)` and `[text](flow_ratio_calib.md)` are both **invalid**.
+* The document name in a link must be `snake_case`.
+* Anchors point to headings and must be **`kebab-case`**: `[Seam](print_settings/quality/quality_settings_seam.md#scarf-joint-seam)`.
+  * The anchor is the heading text lowercased, spaces → `-`, punctuation stripped. Duplicate headings get `-1`, `-2` suffixes.
+  * A link may contain **at most one `#`**, and the referenced heading must actually exist in the target file.
+* External links must include a scheme (`https://…`).
+
+## Images[¶](agent-guide-orcaslicer-wiki.md#images) <a href="#images" id="images"></a>
+
+Enforced by CI (`validate_images.yml` + `unreferenced_images.yml`):
+
+* Store wiki images in `images/`; section-specific images in a subfolder (e.g. `images/calibration/`, `images/InputShaping/`).
+*   **Always link images with raw GitHub URLs**, never relative paths:
+
+    ```
+    ![calibration](images/calibration.png?raw=true)
+    ```
+* Hard requirements the validator checks for any `github.com/OrcaSlicer/...` image URL:
+  * The `?raw=true` query **must** be present on `github.com/.../blob/...` URLs.
+  * The **alt text must exactly equal the image filename without its extension** (e.g. file `calibration.png` → alt `calibration`).
+  * The referenced file must actually exist in the repo (or remote OrcaSlicer repo).
+  * For `<img>` tags, the `alt` attribute must appear **before** `src`.
+* Do **not** use: relative paths, `user-content`/user-images/asset URLs, external/temporary hosts, or images that could be plain text (equations, code → use Markdown/Math/Mermaid).
+*   Only resize when necessary (e.g. thumbnails) using an `<img>` tag with a `height`/`width`; otherwise let the wiki size it:
+
+    ```
+    <img alt="IS_damp_marlin_print_measure" src="images/InputShaping/IS_damp_marlin_print_measure.jpg?raw=true" height="200">
+    ```
+* Formats: **SVG** preferred (theme-adaptive), **PNG** for screenshots/transparency, **JPG** for photos. Only use images you have rights to.
+
+To auto-fix these on existing pages, run [`fix-image-links.ps1`](/broken/pages/bcbb7a697891cea7ee96c87f611b58cde4953dd5) (repo root): `pwsh ./fix-image-links.ps1` (add `-DryRun` to preview). It rewrites relative/root-absolute paths (`](/images…`, `](../images…`) to the canonical `…/blob/main/<path>?raw=true` URL, appends a missing `?raw=true`, sets the alt text to the image filename, and moves `alt` before `src` in `<img>` tags. It only touches OrcaSlicer `blob`/`raw` asset URLs and local paths that resolve to a real file — badges, external/`user-attachments` URLs, fenced code blocks, `wiki/`, and `releases/` are left alone; unresolved local paths are reported, not rewritten.
+
+## List Indentation[¶](agent-guide-orcaslicer-wiki.md#list-indentation) <a href="#list-indentation" id="list-indentation"></a>
+
+Enforced by CI (`validate_list_indentation.yml`):
+
+* Nested list items must be indented by **0 or a multiple of 4 spaces**. 2-space indentation fails.
+
+## Alerts / Callouts[¶](agent-guide-orcaslicer-wiki.md#alerts-callouts) <a href="#alerts-callouts" id="alerts-callouts"></a>
+
+Use GitHub alert syntax rather than bold/quote improvisation:
+
+```
+> [!NOTE]
+> Useful information.
+
+> [!TIP]
+> Helpful advice.
+
+> [!IMPORTANT]
+> Key information.
+
+> [!WARNING]
+> Urgent information.
+
+> [!CAUTION]
+> Risk or negative outcome.
+```
+
+### New-feature notes[¶](agent-guide-orcaslicer-wiki.md#new-feature-notes) <a href="#new-feature-notes" id="new-feature-notes"></a>
+
+When documenting a feature that is only in nightly/newer builds, add:
+
+```
+> [!IMPORTANT]
+> NEW FEATURE: **Feature short description**
+> Available in: [Nightly builds](https://github.com/OrcaSlicer/OrcaSlicer/releases/tag/nightly-builds) or Releases greater than **<stable version at merge time>**.
+```
+
+Remove the note once a stable release that includes the feature ships.
+
+## Code Blocks[¶](agent-guide-orcaslicer-wiki.md#code-blocks) <a href="#code-blocks" id="code-blocks"></a>
+
+Use fenced triple-backtick blocks and **specify the language** for highlighting (` ```json `, ` ```cpp `, ` ```markdown `, …).
+
+## Structure & Navigation[¶](agent-guide-orcaslicer-wiki.md#structure-navigation) <a href="#structure-navigation" id="structure-navigation"></a>
+
+* Give each page one clear objective; open with a short intro, then either a step-by-step guide (procedures/calibration) or a GUI-ordered reference.
+* Add a table-of-contents list at the top of long pages.
+* When adding a new page, link it from `home.md` under the correct category, and confirm it doesn't duplicate an existing page.
+* Inside each section, the website sidebar (`nav:` in `mkdocs.yml`) follows the order of the list links in `home.md`, so place the link where the page sits in the slicer, then run `python generate_nav.py --update`. The order of the top-level sections is fixed by `TOP_LEVEL_FOLDER_ORDER` in [`generate_nav.py`](/broken/pages/99a046a1257fa4f5244b9092e2f55d62f3f1da94); add a new top-level folder there.
+
+## Orca → Wiki Redirection[¶](agent-guide-orcaslicer-wiki.md#orca-wiki-redirection) <a href="#orca-wiki-redirection" id="orca-wiki-redirection"></a>
+
+The OrcaSlicer GUI deep-links into these pages from [src/slic3r/GUI/Tab.cpp](https://github.com/OrcaSlicer/OrcaSlicer/blob/main/src/slic3r/GUI/Tab.cpp) using the same `filename#anchor` scheme (validated weekly by `validate_tab_links.yml`). If you **rename a page or a heading that a Tab.cpp link targets**, that redirect breaks — flag it in the PR so the OrcaSlicer side can be updated. See [how\_to\_wiki.md](/broken/pages/c65cb8520ae8a32a72d1b4d9aa618dd551d5312f#orca-to-wiki-redirection) for the C++ patterns.
+
+The `[Mode](general_settings/option_mode.md)` and `[Variable(s)](developer_reference/built_in_placeholders_variables.md)` lines under an option's heading are **generated — never hand-edited**. Run [`sync-tab-options-to-wiki.ps1`](/broken/pages/9394176a95b783be4839e8cbc7a9e503e68fc7f4) (repo root) to import/refresh them: it reads the option→page map from `Tab.cpp` and the option mode from `PrintConfig.cpp`, then inserts the metadata under the matching heading (and prunes it from unreferenced sections). When adding an option's docs, write only the heading + body, then run `pwsh ./sync-tab-options-to-wiki.ps1` (add `-DryRun` to preview). Manual edits to these lines are overwritten. See [how\_to\_wiki.md](/broken/pages/c65cb8520ae8a32a72d1b4d9aa618dd551d5312f#option-mode-and-variables-metadata).
+
+## Translation Glossary[¶](agent-guide-orcaslicer-wiki.md#translation-glossary) <a href="#translation-glossary" id="translation-glossary"></a>
+
+The table under _Translation table glossary_ in [`developer_reference/localization_glossary.md`](/broken/pages/de6a4f1e8c7d9f6fa71f57371deff8e27cc53ae2) is **generated — never hand-edited**. The source of truth is the per-language files in `developer_reference/glossary/`, so a translator opens only the file for their language:
+
+* `terms.tsv` — the English term and its description; it defines which terms exist and their order.
+* `<lang>.tsv` (`de.tsv`, `fr.tsv`, … — the folder name under `localization/i18n/`) — the English term, its description and that language's translation. Leave the translation empty when the language has none (the generator renders it as `—`). The first two columns repeat `terms.tsv`; `--sync` keeps them in step.
+* `languages.txt` — the language codes, in the column order of the table.
+
+Add a term with a row in `terms.tsv`, run `--sync`, fill the language files, run `--update`. Add a language by listing it in `languages.txt`, running `--sync` and filling the new file. Run [`generate_glossary.py`](/broken/pages/8b4327317f48ebceb978cf2d1b90fb9f0cab0e32) from the repo root:
+
+```
+python generate_glossary.py --sync     # copy terms.tsv (new terms, descriptions, order) into every <lang>.tsv
+python generate_glossary.py --update   # rewrite the table in the page
+python generate_glossary.py            # print the table, report whether the page is stale
+python generate_glossary.py --check    # exit 1 on an inconsistent file or a stale page
+```
+
+`validate_localization_glossary.yml` runs `--check` on every PR touching the glossary files, so commit the regenerated Markdown alongside the TSV changes. Everything outside that one table (the _Kept in English_ list, _Language specifics_) is ordinary Markdown, edited by hand.
+
+`pwsh ./update-wiki.ps1` (repo root) runs the image fixer, the `Tab.cpp` option sync, the `mkdocs.yml` nav generator and this glossary generator in one pass; add `-DryRun` to preview.
+
+## CI Checks[¶](agent-guide-orcaslicer-wiki.md#ci-checks) <a href="#ci-checks" id="ci-checks"></a>
+
+PRs touching Markdown run these validators (all must pass):
+
+| Workflow                                           | Checks                                                                                                     |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `validate_snake_lower_case_markdown_filenames.yml` | `.md` filenames are lowercase `snake_case`                                                                 |
+| `validate_internal_link.yml`                       | internal links: no dir/`.md`, snake\_case doc, kebab-case existing anchor, ≤1 `#`                          |
+| `validate_images.yml`                              | OrcaSlicer image URLs: `?raw=true`, alt == filename, alt-before-src, file exists                           |
+| `validate_list_indentation.yml`                    | list indent is 0 or a multiple of 4                                                                        |
+| `orphaned_files.yml`                               | every page is referenced by another page                                                                   |
+| `unreferenced_images.yml`                          | every `images/` file is referenced by a page                                                               |
+| `validate_localization_glossary.yml`               | glossary files are consistent and `localization_glossary.md` matches them (`generate_glossary.py --check`) |
+| `validate_tab_links.yml`                           | (scheduled) Tab.cpp links resolve to real pages/anchors                                                    |
+
+On push to `main`: `publish_docs_to_wiki.yml` mirrors content to the GitHub Wiki, and `deploy-wiki.yml` builds with mkdocs and deploys to the website.

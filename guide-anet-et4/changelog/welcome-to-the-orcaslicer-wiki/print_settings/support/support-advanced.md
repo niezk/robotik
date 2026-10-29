@@ -1,0 +1,175 @@
+# Support Advanced¶
+
+* [Z distance](support-advanced.md#z-distance)
+* [Support wall loops](support-advanced.md#support-wall-loops)
+* [Base Pattern](support-advanced.md#base-pattern)
+  * [Base pattern spacing](support-advanced.md#base-pattern-spacing)
+* [Pattern angle](support-advanced.md#pattern-angle)
+* [Interface layers](support-advanced.md#interface-layers)
+* [Interface pattern](support-advanced.md#interface-pattern)
+* [Interface spacing](support-advanced.md#interface-spacing)
+* [Normal support expansion](support-advanced.md#normal-support-expansion)
+* [Support/object XY distance](support-advanced.md#supportobject-xy-distance)
+* [Support/object first layer gap](support-advanced.md#supportobject-first-layer-gap)
+* [Don't support bridges](support-advanced.md#dont-support-bridges)
+* [Max bridge length](support-advanced.md#max-bridge-length)
+* [Independent support layer height](support-advanced.md#independent-support-layer-height)
+
+## Z distance[¶](support-advanced.md#z-distance) <a href="#z-distance" id="z-distance"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variables](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `support_top_z_distance`, `support_bottom_z_distance`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#integer-float-percentage): `Float`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--support-top-z-distance=1` (same pattern for the other variables above).\
+The Z gap between the support and the object: **Top Z distance** is the gap between the top of the support and the overhang above it, and **Bottom Z distance** the gap between the object and a support standing on it. Both are rounded to a multiple of the layer height unless [Independent support layer height](support-advanced.md#independent-support-layer-height) is enabled.
+
+A Top Z distance of `0` is meant for soluble supports. In that case, Bottom Z distance is also ignored when there are bottom interface layers, and the support is printed in direct contact with the object.
+
+## Support wall loops[¶](support-advanced.md#support-wall-loops) <a href="#support-wall-loops" id="support-wall-loops"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `tree_support_wall_count`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#integer-float-percentage): `Integer`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--tree-support-wall-count=1`.\
+This setting specifies the number of support walls, from 0 to 2. 0 means auto.
+
+## Base Pattern[¶](support-advanced.md#base-pattern) <a href="#base-pattern" id="base-pattern"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `support_base_pattern`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#choice): `Choice`.\
+[Options](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#choice): `default, rectilinear, rectilinear-grid, honeycomb, lightning, hollow`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--support-base-pattern=default`.\
+Line pattern for the base of the support.
+
+`Default` depends on the support type: normal supports use `Rectilinear`, and tree supports are left `Hollow`, with only the branch walls printed. With the [Tree Hybrid](/broken/pages/a5ac9e1d60ddd3e6c582c4a55c887162b3caeab4#tree-hybrid) style, `Default` fills the parts printed as normal support with `Rectilinear` and leaves the branches hollow, while choosing `Rectilinear` fills the branches too.
+
+### Base pattern spacing[¶](support-advanced.md#base-pattern-spacing) <a href="#base-pattern-spacing" id="base-pattern-spacing"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `support_base_pattern_spacing`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#integer-float-percentage): `Float`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--support-base-pattern-spacing=1`.\
+Spacing between support lines.
+
+## Pattern angle[¶](support-advanced.md#pattern-angle) <a href="#pattern-angle" id="pattern-angle"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `support_angle`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#integer-float-percentage): `Float`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--support-angle=1`.\
+Use this setting to rotate the support pattern on the horizontal plane.
+
+## Interface layers[¶](support-advanced.md#interface-layers) <a href="#interface-layers" id="interface-layers"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variables](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `support_interface_top_layers`, `support_interface_bottom_layers`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#integer-float-percentage): `Integer`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--support-interface-top-layers=1` (same pattern for the other variables above).\
+The number of interface layers.
+
+The number you set is the total thickness of the dense interface, counted in printed layers and including the layer that faces the model. Set `1` and you get a single dense layer; set `3` and you get three. More layers give a flatter, better supported surface but take longer to print and are harder to peel off.
+
+The top and bottom interfaces are set separately:
+
+* **Top interface layers** (`support_interface_top_layers`) are the layers printed under an overhang, below the [Z distance](support-advanced.md#z-distance) gap. These are the ones that determine the finish of the supported surface.
+* **Bottom interface layers** (`support_interface_bottom_layers`) are the layers printed where a support lands on top of the model, protecting that surface from the support body. `Same as top` reuses the top value. You can use bottom interfaces on their own, with top interface layers set to `0`.
+
+With both set to `0` there is no interface at all: the support prints all the way through with the [Base Pattern](support-advanced.md#base-pattern), which is fastest and easiest to remove but leaves the roughest overhangs.
+
+Tip
+
+When the interface has its own filament assigned, this number also decides how the layers are shared between the two materials. See [Interface filament transitions](/broken/pages/f8e8b0069c82289658d3b22b23006874c7d547b9#interface-filament-transitions).
+
+## Interface pattern[¶](support-advanced.md#interface-pattern) <a href="#interface-pattern" id="interface-pattern"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `support_interface_pattern`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#choice): `Choice`.\
+[Options](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#choice): `auto, rectilinear, concentric, spiralinset, rectilinear_interlaced, grid`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--support-interface-pattern=auto`.\
+The pattern used for the support interface.
+
+Each option lays the interface lines out differently, and all of them are measured from [Pattern angle](support-advanced.md#pattern-angle), so rotating that rotates the interface with it. The same rules apply to normal and tree supports.
+
+| Option                   | What you get                                                                                                                                                                                                 |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Default`                | Straight lines crossing the support at 90° to Pattern angle. Switches to concentric loops when the interface touches the model, which is the usual case for soluble supports.                                |
+| `Rectilinear`            | Straight lines at 90° to Pattern angle. With the [Snug](/broken/pages/a5ac9e1d60ddd3e6c582c4a55c887162b3caeab4#snug) style they are rotated a further 45°.                                                   |
+| `Concentric`             | Loops following the outline of the interface, which peel off in one piece and leave no line ends on the surface.                                                                                             |
+| `Spiral Inset`           | Like `Concentric`, but the loops are joined into a continuous [spiral](/broken/pages/a147f0b85dea1cbf1cf61adb81420a35f687c13f#spiral-inset), so the nozzle steps from one ring to the next without stopping. |
+| `Rectilinear Interlaced` | Straight lines that swing 45° one way then the other on each successive layer, so the layers cross instead of stacking. This ties the interface together and makes it stiffer under the overhang.            |
+| `Grid`                   | Straight lines crossing in a grid on every layer: one set runs along Pattern angle, in line with the [Base Pattern](support-advanced.md#base-pattern) below, and the other at 90° to it.                     |
+
+Important
+
+NEW FEATURE: **Spiral Inset interface pattern**\
+Available in: [Nightly builds](https://github.com/OrcaSlicer/OrcaSlicer/releases/tag/nightly-builds) or Releases greater than **2.4.2**.
+
+If [Interface spacing](support-advanced.md#interface-spacing) is wide enough that the interface is no longer solid, `Default` and `Rectilinear` switch to the base support pattern so that the sparse lines still anchor to each other.
+
+## Interface spacing[¶](support-advanced.md#interface-spacing) <a href="#interface-spacing" id="interface-spacing"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variables](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `support_interface_spacing`, `support_bottom_interface_spacing`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#integer-float-percentage): `Float`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--support-interface-spacing=1` (same pattern for the other variables above).\
+Spacing of interface lines. Zero means solid interface.
+
+The top (`support_interface_spacing`) and bottom (`support_bottom_interface_spacing`) values are set separately and neither one affects the other, so a bottom interface keeps the spacing you gave it even if you have turned top interfaces off.
+
+When [Support ironing](/broken/pages/0a96a23ec4091c1aefc9bca8a50840f599340f7a) is enabled, the top interface is always printed solid and the top value is ignored.
+
+## Normal support expansion[¶](support-advanced.md#normal-support-expansion) <a href="#normal-support-expansion" id="normal-support-expansion"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `support_expansion`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#integer-float-percentage): `Float`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--support-expansion=1`.\
+Expand (+) or shrink (-) the horizontal span of normal support.
+
+## Support/object XY distance[¶](support-advanced.md#supportobject-xy-distance) <a href="#supportobject-xy-distance" id="supportobject-xy-distance"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `support_object_xy_distance`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#integer-float-percentage): `Float`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--support-object-xy-distance=1`.\
+XY separation between an object and its support.
+
+## Support/object first layer gap[¶](support-advanced.md#supportobject-first-layer-gap) <a href="#supportobject-first-layer-gap" id="supportobject-first-layer-gap"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `support_object_first_layer_gap`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#integer-float-percentage): `Float`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--support-object-first-layer-gap=1`.\
+XY separation between an object and its support at the first layer.
+
+## Don't support bridges[¶](support-advanced.md#dont-support-bridges) <a href="#dont-support-bridges" id="dont-support-bridges"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `bridge_no_support`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#boolean): `Boolean`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--bridge-no-support=1`.\
+Don't support bridge areas, which would otherwise make the support very large. Bridges can usually be printed directly without support if they are not very long.
+
+This option is only shown for normal supports. Tree supports use [Max bridge length](support-advanced.md#max-bridge-length) instead.
+
+## Max bridge length[¶](support-advanced.md#max-bridge-length) <a href="#max-bridge-length" id="max-bridge-length"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `max_bridge_length`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#integer-float-percentage): `Float`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--max-bridge-length=1`.\
+The longest bridge that tree supports leave unsupported. It replaces [Don't support bridges](support-advanced.md#dont-support-bridges) for every tree style, including Organic. Bridges up to this length that are anchored at both ends are printed without support, and longer ones are supported along their whole length. `0` supports all bridges, and a very large value leaves every bridge unsupported.
+
+With the Tree Slim, Tree Strong and Tree Hybrid styles, the branch tips placed inside an overhang are also spaced at least half this length apart, so a value above twice [Branch Distance](/broken/pages/69f1a20cc31b01abc7cf4a6fcdc8c05f7e292c6a#branch-distance) spreads them further apart.
+
+## Independent support layer height[¶](support-advanced.md#independent-support-layer-height) <a href="#independent-support-layer-height" id="independent-support-layer-height"></a>
+
+[Mode](/broken/pages/246b4d07eed07a8ac878abc4613a350fbce2c022): `Advanced`.\
+[Variable](/broken/pages/2ce6fff32f5448d0159c2e2dfbcb54f26d3c6918): `independent_support_layer_height`.\
+[Type](/broken/pages/726477a877bf7a8efe103413c86723285f8ca2eb#boolean): `Boolean`.\
+[CLI Example](/broken/pages/f439233018f603f29dcf6b1fcc75b0ab21b6fd24#setting-overrides): `--independent-support-layer-height=1`.\
+Support layers use a layer height independent of the object layers. This allows a custom Z gap and saves print time. This option is ignored when a prime tower is printed, and it is not available with the Organic tree support style.
+
+Turning this on changes the height of the support layers, not their number: you still get exactly the [Interface layers](support-advanced.md#interface-layers) you asked for, including with the `Tree Slim`, `Tree Strong` and `Tree Hybrid` styles.
