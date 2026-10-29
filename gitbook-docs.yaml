@@ -1,0 +1,40 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: sterotics Docs
+  structure:
+    - type: section
+      key: section-1
+      title: Home
+      path: home
+      icon: house
+      default: true
+      children:
+        - type: space
+          key: space-1
+          title: Home
+          path: home
+          default: true
+          content:
+            directory: ./home
+            language: id
+    - type: section
+      key: section-2
+      title: Anet Tutorial
+      path: guide-anet-et4
+      description: Tutorial menggunakan Anet ET4
+      icon: clock-rotate-left
+      children:
+        - type: space
+          key: space-2
+          title: Anet Tutorial
+          path: changelog
+          default: true
+          content:
+            directory: ./guide-anet-et4/changelog
+        - type: space
+          key: space-3
+          title: stepper-error-getar
+          path: stepper-error-getar
+          draft: true
+          content:
+            directory: ./guide-anet-et4/stepper-error-getar
